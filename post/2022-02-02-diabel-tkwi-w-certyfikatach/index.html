@@ -59,7 +59,7 @@ AnyIO - strona serwera:"><script type="application/ld+json">
   "headline": "Diabeł tkwi w... certyfikatach",
   "description" : "Ostatnio napotkałem na problem z certyfikatami samodzielnie podpisanymi, a dokładniej z pobieraniem certyfikatu klienta przy jego połączeniu z serwerem. Taki prosty przykład (zaczerpnięty z dokumentacji AnyIO - strona serwera:\n",
   "inLanguage" : "en",
-  "wordCount":  773 ,
+  "wordCount":  857 ,
   "datePublished" : "2022-02-02T21:57:22",
   "dateModified" : "2022-02-02T21:57:22",
   "image" : "https:\/\/jplochocki.github.io\/",
@@ -233,7 +233,40 @@ AnyIO - strona serwera:">
       <article role="main" class="blog-post">
         <p>Ostatnio napotkałem na problem z certyfikatami samodzielnie podpisanymi, a dokładniej z pobieraniem certyfikatu klienta przy jego połączeniu z serwerem. Taki prosty przykład (zaczerpnięty z dokumentacji
 <a href="https://anyio.readthedocs.io/en/stable/streams.html#tls-streams">AnyIO</a> - strona serwera:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> ssl
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> ssl
 
 <span style="color:#f92672">from</span> anyio <span style="color:#f92672">import</span> create_tcp_listener, run
 <span style="color:#f92672">from</span> anyio.streams.tls <span style="color:#f92672">import</span> TLSListener
@@ -262,7 +295,9 @@ AnyIO - strona serwera:">
     <span style="color:#66d9ef">await</span> listener<span style="color:#f92672">.</span>serve(handle)
 
 run(main)
-</code></pre></div><p>Aby mieć dostęp do <strong>certyfikatu klienta</strong> łączącego się z serwerem, musimy ustawić <code>context.verify_mode</code> na <code>ssl.CERT_OPTIONAL</code> lub <code>ssl.CERT_REQUIRED</code>
+</code></pre></td></tr></table>
+</div>
+</div><p>Aby mieć dostęp do <strong>certyfikatu klienta</strong> łączącego się z serwerem, musimy ustawić <code>context.verify_mode</code> na <code>ssl.CERT_OPTIONAL</code> lub <code>ssl.CERT_REQUIRED</code>
 (wtedy też <code>TLSAttribute.peer_certificate</code> / <code>TLSAttribute.peer_certificate_binary</code> da nam w wyniku <strong>certyfikat klienta</strong>).
 Ale <code>ssl.CERT_OPTIONAL</code> / <code>ssl.CERT_REQUIRED</code> wymuszają od razu sprawdzenie poprawności tego certyfikatu. Jeśli jest on podpisany przez znane dla systemu <code>CA</code>,
 to nie mamy problemu. Schody zaczynają się, gdy mamy <em>self signed certificate</em> - czyli certyfikat samodzielnie podpisany. Nie możemy go pobrać w trakcie
@@ -279,7 +314,21 @@ na pobranie <strong>certyfikatu klienta</strong> za pierwszym razem bez jego wer
 funkcji <a href="https://docs.python.org/3/library/ssl.html#ssl.SSLContext.load_verify_locations">SSLContext.load_verify_locations</a>).</p>
 <p>Znalazłem jednak pewne rozwiązanie tego problemu. Biblioteka <a href="https://docs.python.org/3/library/ssl.html">ssl</a> posiada nieudokumentowaną właściwość
 <code>SSLContext._msg_callback</code> (fragment z kodu źródłowego <a href="https://github.com/python/cpython/blob/83d544b9292870eb44f6fca37df0aa351c4ef83a/Lib/ssl.py#L643">ssl.py</a>):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#a6e22e">@property</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#a6e22e">@property</span>
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_msg_callback</span>(self):
         <span style="color:#e6db74">&#34;&#34;&#34;TLS message callback
 </span><span style="color:#e6db74">        The message callback provides a debugging hook to analyze TLS
@@ -289,11 +338,22 @@ funkcji <a href="https://docs.python.org/3/library/ssl.html#ssl.SSLContext.load_
 </span><span style="color:#e6db74">        traffic or to abort a connection. Any exception raised in the
 </span><span style="color:#e6db74">        callback is delayed until the handshake, read, or write operation
 </span><span style="color:#e6db74">        has been performed.
-</span></code></pre></div><p><code>Callback</code> ten wywoływany jest w trakcie interesującego nas procesu <code>handshake</code> z następującymi wartościami <code>content_type</code> i <code>msg_type</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">msg_cb</span>(conn, direction, version, content_type, msg_type, data):
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>Callback</code> ten wywoływany jest w trakcie interesującego nas procesu <code>handshake</code> z następującymi wartościami <code>content_type</code> i <code>msg_type</code>:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">msg_cb</span>(conn, direction, version, content_type, msg_type, data):
         print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>content_type<span style="color:#e6db74">=}</span><span style="color:#ae81ff">\t\t</span><span style="color:#e6db74">{</span>msg_type<span style="color:#e6db74">=}</span><span style="color:#e6db74">&#39;</span>)
     context<span style="color:#f92672">.</span>_msg_callback <span style="color:#f92672">=</span> msg_cb
-</code></pre></div><p>Wynik:</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>Wynik:</p>
 <pre tabindex="0"><code>content_type=&lt;_TLSContentType.HEADER: 256&gt;		msg_type=&lt;_TLSContentType.HANDSHAKE: 22&gt;
 content_type=&lt;_TLSContentType.HANDSHAKE: 22&gt;		msg_type=&lt;_TLSMessageType.CLIENT_HELLO: 1&gt;
 content_type=&lt;_TLSContentType.HEADER: 256&gt;		msg_type=&lt;_TLSContentType.HANDSHAKE: 22&gt;
@@ -325,14 +385,27 @@ content_type=&lt;_TLSContentType.ALERT: 21&gt;		msg_type=&lt;_TLSAlertType.UNKNO
 </code></pre><p>Interesuje nas drugie wystąpienie <code>content_type ==_TLSContentType.HANDSHAKE</code> i <code>msg_type == _TLSMessageType.CERTIFICATE</code>. Wtedy przesyłany jest
 <strong>certyfikat klienta</strong>, którego dane będą zawarte w <code>data</code>. Ale poprzedza je jeszcze nagłówek części pakietu, którego struktura (po uproszczeniu) wygląda
 następująco:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">struct</span> {
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">struct</span> {
   uint8     msg_type;                   <span style="color:#75715e">/* handshake type */</span>
   uint24    length;                     <span style="color:#75715e">/* bytes in message */</span>
   uint24 <span style="color:#f92672">/</span> uint32    certificates_len;  <span style="color:#75715e">/* uint24 przy TLSv1_2 i uint32 przyTLSv1_3 */</span>
   uint24    first_cert_len;
   ... <span style="color:#75715e">/* first certyficate bytes */</span>
 } Handshake_Certificate;
-</code></pre></div><p><code>msg_type</code> zawsze powinno mieć wartość <code>11</code> (pakiet <code>CERTIFICATE</code>). Trzy następne pola to wielkości danych</p>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>msg_type</code> zawsze powinno mieć wartość <code>11</code> (pakiet <code>CERTIFICATE</code>). Trzy następne pola to wielkości danych</p>
 <ol>
 <li>całego pakietu (<code>length</code>)</li>
 <li>części z certyfikatami (<code>certificates_len</code> - w zależności czy mamy <code>TLSv1_2</code>, czy <code>TLSv1_3</code> - to pole ma różną długość!)</li>
@@ -340,7 +413,46 @@ następująco:</p>
 </ol>
 <p>Po tym wstępie (<code>10</code> lub <code>11</code> bajtów) mamy właściwe dane binarne certyfikatu. Całość przetwarzamy za pomocą
 <a href="https://docs.python.org/3/library/struct.html">struct</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    client_cert_request <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    client_cert_request <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">msg_cb</span>(conn, direction, version, content_type, msg_type, data):
         <span style="color:#66d9ef">global</span> client_cert_request
@@ -375,7 +487,9 @@ następująco:</p>
             cert_DER <span style="color:#f92672">=</span> data[certs_start:cert_len <span style="color:#f92672">+</span> certs_start]
             context<span style="color:#f92672">.</span>load_verify_locations(cadata<span style="color:#f92672">=</span>cert_DER)
             <span style="color:#75715e"># cert_PEM = ssl.DER_cert_to_PEM_cert(cert_DER)</span>
-</code></pre></div><p>Zawartość <code>cert_DER</code> możemy na tym etapie wczytać funkcją
+</code></pre></td></tr></table>
+</div>
+</div><p>Zawartość <code>cert_DER</code> możemy na tym etapie wczytać funkcją
 <a href="https://docs.python.org/3/library/ssl.html#ssl.SSLContext.load_verify_locations">SSLContext.load_verify_locations</a> do kontekstu. Będzie to skutkowało&hellip;
 uznaniem tego <strong>certyfikatu klienta</strong> za prawidłowo podpisany. Dane te możemy też konwertować do tekstowego formatu <code>PEM</code> za pomocą funkcji
 <a href="https://docs.python.org/3/library/ssl.html#ssl.DER_cert_to_PEM_cert">DER_cert_to_PEM_cert</a> i zapisać je na dysku..</p>

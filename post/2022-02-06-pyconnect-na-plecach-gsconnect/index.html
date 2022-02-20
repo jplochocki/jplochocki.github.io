@@ -58,7 +58,7 @@
   "headline": "PyConnect na plecach GSConnect",
   "description" : "Mniej więcej na początku grudnia zainteresowałem się protokołem KDEConnect. Aplikacji tej używałem już od ponad roku - dobrze służyła mi do synchronizacji plików pomiędzy telefonem i komputerem. Coraz bardziej marzyła mi się własna wersja - po stronie komputera. Planowałem jej integrację z własnymi aplikacjami (np. automatyzację pobierania i tagowania nowych zdjęć z moich podróży).\n",
   "inLanguage" : "en",
-  "wordCount":  1174 ,
+  "wordCount":  1416 ,
   "datePublished" : "2022-02-06T15:00:22",
   "dateModified" : "2022-02-06T15:00:22",
   "image" : "https:\/\/jplochocki.github.io\/",
@@ -232,19 +232,53 @@
         <p>Mniej więcej na początku grudnia zainteresowałem się protokołem <a href="https://play.google.com/store/apps/details?id=org.kde.kdeconnect_tp&amp;hl=pl&amp;gl=US">KDEConnect</a>. Aplikacji tej używałem już od ponad roku - dobrze służyła mi do synchronizacji plików pomiędzy telefonem i komputerem. Coraz bardziej marzyła mi się własna wersja - po stronie komputera. Planowałem jej integrację z własnymi aplikacjami (np. automatyzację pobierania i tagowania nowych zdjęć z moich podróży).</p>
 <p>Poznanie samego protokołu <a href="https://play.google.com/store/apps/details?id=org.kde.kdeconnect_tp&amp;hl=pl&amp;gl=US">KDEConnect</a> nie należało jednak do zadań prostych. Dokumentacja samego <a href="https://play.google.com/store/apps/details?id=org.kde.kdeconnect_tp&amp;hl=pl&amp;gl=US">KDEConnect</a> - jest mało czytelna i nie za bogata. W zasadzie więcej o komunikacji musiałem dowiedzieć się z analizy kodu <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a> (czyli rozszerzenia do <a href="https://www.gnome.org/">Gnome Shell</a>, które realizuje na komputerze te same zadania, co <a href="https://play.google.com/store/apps/details?id=org.kde.kdeconnect_tp&amp;hl=pl&amp;gl=US">KDEConnect</a>). W końcu udało mi się nawiązać pierwsze połączenia z telefonem - początkowo dla uproszczenia korzystając z parowania urządzenia, jakie wykonał dla mnie sam <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a>.</p>
 <p>Co mi było potrzebne (poza analizą kodu <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a>) - nawiązanie połączenia przez <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a>. I jego wyłączenie zaraz po tym - inaczej zajmowałby on port <code>1716</code> potrzebny dla mojej aplikacji.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">gnome-extensions disable gsconnect@andyholmes.github.io
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">gnome-extensions disable gsconnect@andyholmes.github.io
 ps axf | grep gsconnect | grep -v grep | awk <span style="color:#e6db74">&#39;{print &#34;sudo kill -9 &#34; $1}&#39;</span> | sh
-</code></pre></div><p>Rozszerzenie wyłączamy poleceniem <code>gnome-extensions disable</code> (<code>enable</code> pozwoli nam potem na jego włączenie). Musimy jeszcze oddzielnie zabić proces samego rozszerzenia (mający wywołanie w stylu <code>gjs /home/systemik/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io/service/daemon.js</code>). Po tym przestanie zajmować ono nam port <code>1716</code> potrzebny do komunikacji z <a href="https://play.google.com/store/apps/details?id=org.kde.kdeconnect_tp&amp;hl=pl&amp;gl=US">KDEConnect</a>.</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>Rozszerzenie wyłączamy poleceniem <code>gnome-extensions disable</code> (<code>enable</code> pozwoli nam potem na jego włączenie). Musimy jeszcze oddzielnie zabić proces samego rozszerzenia (mający wywołanie w stylu <code>gjs /home/systemik/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io/service/daemon.js</code>). Po tym przestanie zajmować ono nam port <code>1716</code> potrzebny do komunikacji z <a href="https://play.google.com/store/apps/details?id=org.kde.kdeconnect_tp&amp;hl=pl&amp;gl=US">KDEConnect</a>.</p>
 <p>Z konfiguracji <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a> będziemy potrzebowali certyfikatu z kluczem prywatnym dla komunikacji <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> - są one zapisane w plikach <code>~/.config/gsconnect/certificate.pem</code> i <code>~/.config/gsconnect/private.pem</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os.path
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os.path
 
 
 GSCONNECT_CERTFILE <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>expanduser(GSCONNECT_CERTFILE)
 GSCONNECT_KEYFILE <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>expanduser(GSCONNECT_KEYFILE)
 
 <span style="color:#66d9ef">assert</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(GSCONNECT_CERTFILE) <span style="color:#f92672">and</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(GSCONNECT_KEYFILE)
-</code></pre></div><p>Drugi zestaw danych zawiera konfiguracja <a href="https://en.wikipedia.org/wiki/Dconf">dconf</a> (<code>dconf dump /org/gnome/shell/extensions/gsconnect/</code>) - poniżej wynik skracam tylko do tych danych, które będą nam potrzebne:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[/]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Drugi zestaw danych zawiera konfiguracja <a href="https://en.wikipedia.org/wiki/Dconf">dconf</a> (<code>dconf dump /org/gnome/shell/extensions/gsconnect/</code>) - poniżej wynik skracam tylko do tych danych, które będą nam potrzebne:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[/]</span>
 <span style="color:#a6e22e">devices</span><span style="color:#f92672">=</span><span style="color:#e6db74">[&#39;32151f87b8be9b96&#39;]</span>
 <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;112ab5c3-fd8d-4bcb-ae11-9d08fcad0a05&#39;</span>
 <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;dell&#39;</span>
@@ -253,8 +287,28 @@ GSCONNECT_KEYFILE <span style="color:#f92672">=</span> os<span style="color:#f92
 <span style="color:#a6e22e">certificate-pem</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;-----BEGIN CERTIFICATE-----...----END CERTIFICATE-----&#39;</span>
 <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Redmi 6A&#39;</span>
 <span style="color:#a6e22e">paired</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
-</code></pre></div><p>Dane te a naszym kodzie możemy odczytać na dwa sposoby - <a href="https://docs.python.org/3/library/subprocess.html">subprocess</a> i wywołanie <code>dconf</code> (np. <code>dconf read /org/gnome/shell/extensions/gsconnect/id</code>). Lub wykorzystując <a href="https://lazka.github.io/pgi-docs/Gio-2.0/classes/Settings.html">Gio.Settings</a> z <a href="https://pygobject.readthedocs.io/en/latest/">PyGObject</a>. Ten drugi model wydał mi się trochę jednak prostszy (mimo tego, że <a href="https://lazka.github.io/pgi-docs/Gio-2.0/classes/Settings.html">Gio.Settings</a> obsługuje się w sposób mało <em>Python-owy</em>). Przykład odczytywania podstawowych danych:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> gi.repository <span style="color:#f92672">import</span> Gio
+</code></pre></td></tr></table>
+</div>
+</div><p>Dane te a naszym kodzie możemy odczytać na dwa sposoby - <a href="https://docs.python.org/3/library/subprocess.html">subprocess</a> i wywołanie <code>dconf</code> (np. <code>dconf read /org/gnome/shell/extensions/gsconnect/id</code>). Lub wykorzystując <a href="https://lazka.github.io/pgi-docs/Gio-2.0/classes/Settings.html">Gio.Settings</a> z <a href="https://pygobject.readthedocs.io/en/latest/">PyGObject</a>. Ten drugi model wydał mi się trochę jednak prostszy (mimo tego, że <a href="https://lazka.github.io/pgi-docs/Gio-2.0/classes/Settings.html">Gio.Settings</a> obsługuje się w sposób mało <em>Python-owy</em>). Przykład odczytywania podstawowych danych:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> gi.repository <span style="color:#f92672">import</span> Gio
 
 
 gsconnect_config <span style="color:#f92672">=</span> Gio<span style="color:#f92672">.</span>Settings<span style="color:#f92672">.</span>new_with_path(
@@ -268,8 +322,23 @@ gsconnect_config <span style="color:#f92672">=</span> Gio<span style="color:#f92
     <span style="color:#e6db74">&#39;org.gnome.Shell.Extensions.GSConnect&#39;</span>,
     <span style="color:#e6db74">&#39;/org/gnome/shell/extensions/gsconnect/&#39;</span>)
 GSCONNECT_KNOWN_DEVICES <span style="color:#f92672">=</span> list(gsconnect_config<span style="color:#f92672">.</span>get_value(<span style="color:#e6db74">&#39;devices&#39;</span>))
-</code></pre></div><p>Przy wykonywaniu połączenia będziemy na pewno chcieli wydobyć certyfikat drugiej strony:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># remote_deviceId - to id urządzenia przysłany w pakiecie identyfikacji i zapisany w dconf</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Przy wykonywaniu połączenia będziemy na pewno chcieli wydobyć certyfikat drugiej strony:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># remote_deviceId - to id urządzenia przysłany w pakiecie identyfikacji i zapisany w dconf</span>
 
 gsconnect_config <span style="color:#f92672">=</span> Gio<span style="color:#f92672">.</span>Settings<span style="color:#f92672">.</span>new_with_path(
     <span style="color:#e6db74">&#39;org.gnome.Shell.Extensions.GSConnect.Device&#39;</span>,
@@ -278,7 +347,9 @@ gsconnect_config <span style="color:#f92672">=</span> Gio<span style="color:#f92
 ssl_context<span style="color:#f92672">.</span>load_verify_locations(
     cadata<span style="color:#f92672">=</span>ssl<span style="color:#f92672">.</span>PEM_cert_to_DER_cert(
         gsconnect_config<span style="color:#f92672">.</span>get_string(<span style="color:#e6db74">&#39;certificate-pem&#39;</span>)))
-</code></pre></div><p>Analiza <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a> (a dokładniej plików <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect/blob/master/src/service/core.js">src/service/core.js</a> i <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect/blob/master/src/service/backends/lan.js">src/service/backends/lan.js</a>) naprowadziła mnie na najbardziej podstawowy mechanizm nawiązywania połączenia:</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>Analiza <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a> (a dokładniej plików <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect/blob/master/src/service/core.js">src/service/core.js</a> i <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect/blob/master/src/service/backends/lan.js">src/service/backends/lan.js</a>) naprowadziła mnie na najbardziej podstawowy mechanizm nawiązywania połączenia:</p>
 <ol>
 <li>Otwieramy nasłuch <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol">UDP</a> na porcie <code>1716</code> (od wszystkich), czekamy na pakiet <code>kdeconnect.identity</code>. Jeśli jego nadawca (<code>body.deviceId</code>) jest nam znany - przechodzimy dalej.</li>
 <li>Otwieramy połączenie (<a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">TCP</a> na porcie <code>1716</code>) z nadawcą tego pakietu.</li>
@@ -288,7 +359,45 @@ ssl_context<span style="color:#f92672">.</span>load_verify_locations(
 </ol>
 <p>W swoim kodzie (<a href="https://gist.github.com/jplochocki/1a7a206ae7e2b0f2243b1fa473b31003">pyconnect.py</a>) będę posługiwał się biblioteką <a href="https://anyio.readthedocs.io/en/stable/">AnyIO</a>, która mocno upraszcza działanie z natywnym <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">TCP</a> i <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol">UDP</a>, a jednocześnie umożliwia działanie w <a href="https://docs.python.org/3/library/asyncio.html">asyncio</a>.</p>
 <p>Nasłuch <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol">UDP</a> nie jest trudnym zadaniem, używamy <a href="https://anyio.readthedocs.io/en/stable/api.html#anyio.create_udp_socket">anyio.create_udp_socket()</a>, pamiętając o <code>local_host='255.255.255.255'</code> (czyli nasłuch na <a href="https://pl.wikipedia.org/wiki/Broadcast">broadcast</a>) i odpowiednim <code>local_port</code> (<code>1716</code>).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> anyio
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> anyio
 
 
 KDE_CONNECT_DEFAULT_PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">1716</span>
@@ -322,8 +431,85 @@ KDE_CONNECT_DEFAULT_PORT <span style="color:#f92672">=</span> <span style="color
                 <span style="color:#66d9ef">return</span>
 
             main_group<span style="color:#f92672">.</span>start_soon(device_connection_task, pack, host)
-</code></pre></div><p>Odbierany pakiet będzie miał formę <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> - zajmującego <strong>tylko jedną linię</strong>. Jego przykładowa wartość wygląda następująco:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+</code></pre></td></tr></table>
+</div>
+</div><p>Odbierany pakiet będzie miał formę <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> - zajmującego <strong>tylko jedną linię</strong>. Jego przykładowa wartość wygląda następująco:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
     <span style="color:#f92672">&#34;id&#34;</span>:<span style="color:#ae81ff">1644153455113</span>,
     <span style="color:#f92672">&#34;type&#34;</span>:<span style="color:#e6db74">&#34;kdeconnect.identity&#34;</span>,
     <span style="color:#f92672">&#34;body&#34;</span>:{
@@ -394,14 +580,46 @@ KDE_CONNECT_DEFAULT_PORT <span style="color:#f92672">=</span> <span style="color
         <span style="color:#f92672">&#34;tcpPort&#34;</span>:<span style="color:#ae81ff">1716</span>
     }
 }
-</code></pre></div><p>Co warto wiedzieć o pakietach - mają one typ (<code>type</code> - na tym etapie interesują nas tylko pakiety <code>kdeconnect.identity</code>). <code>id</code> to po prostu aktualny czas. Najciekawsze pola w <code>body</code> to <code>deviceId</code> i <code>deviceName</code> (oba będą zgodne z danymi z konfiguracji). <code>incomingCapabilities</code> i <code>outgoingCapabilities</code> to lista pluginów, jakie mogę być obsługiwane - my na początku skrócimy ją do <code>kdeconnect.share.request</code>, czyli umożliwimy tylko przesyłanie plików. W kwestii <code>tcpPort</code> - nie widziałem nigdy, aby był używany jakiś inny, niż domyślny <code>1716</code>, choć kod <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a> trzyma się tego, aby nawiązywać połączenie na porcie podawanym przez ten pakiet.</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>Co warto wiedzieć o pakietach - mają one typ (<code>type</code> - na tym etapie interesują nas tylko pakiety <code>kdeconnect.identity</code>). <code>id</code> to po prostu aktualny czas. Najciekawsze pola w <code>body</code> to <code>deviceId</code> i <code>deviceName</code> (oba będą zgodne z danymi z konfiguracji). <code>incomingCapabilities</code> i <code>outgoingCapabilities</code> to lista pluginów, jakie mogę być obsługiwane - my na początku skrócimy ją do <code>kdeconnect.share.request</code>, czyli umożliwimy tylko przesyłanie plików. W kwestii <code>tcpPort</code> - nie widziałem nigdy, aby był używany jakiś inny, niż domyślny <code>1716</code>, choć kod <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a> trzyma się tego, aby nawiązywać połączenie na porcie podawanym przez ten pakiet.</p>
 <p>Pakiet próbujemy odczytać, potem - sprawdzamy czy ma on wymagany typ i interesujące nas <code>body.deviceId</code> (z <code>ID</code>, z którym nawiązał wcześniej połączenie <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a>, a my te dane przechwyciliśmy z jego konfiguracji). Jak już wszystkie warunki zostaną spełnione - przechodzimy do wystartowania zadania <code>device_connection_task()</code>, które ogarnie nam temat połączenia <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">TCP</a>.</p>
 <p>Połączenie to nawiązujemy za pomocą <a href="https://anyio.readthedocs.io/en/stable/api.html#anyio.connect_tcp">anyio.connect_tcp()</a>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
 <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">device_connection_task</span>(id_packet, remote_ip):
     <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">with</span> <span style="color:#66d9ef">await</span> anyio<span style="color:#f92672">.</span>connect_tcp(remote_ip, KDE_CONNECT_DEFAULT_PORT) <span style="color:#66d9ef">as</span> sock:  <span style="color:#75715e"># noqa</span>
-</code></pre></div><p>Następnie musimy w nim wysłać nasz pakiet identyfikacji:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+</code></pre></td></tr></table>
+</div>
+</div><p>Następnie musimy w nim wysłać nasz pakiet identyfikacji:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
     <span style="color:#f92672">&#34;id&#34;</span>:<span style="color:#ae81ff">1644153455971504483</span>,
     <span style="color:#f92672">&#34;type&#34;</span>:<span style="color:#e6db74">&#34;kdeconnect.identity&#34;</span>,
     <span style="color:#f92672">&#34;body&#34;</span>:{
@@ -418,8 +636,46 @@ KDE_CONNECT_DEFAULT_PORT <span style="color:#f92672">=</span> <span style="color
         <span style="color:#f92672">&#34;tcpPort&#34;</span>:<span style="color:#ae81ff">1716</span>
     }
 }
-</code></pre></div><p><code>body.deviceId</code> i <code>body.deviceName</code> odczytaliśmy wcześniej z konfiguracji <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a>. <code>body.incomingCapabilities</code> i <code>body.outgoingCapabilities</code> zostały mocno skrócone - w pierwszej wersji chciałem mieć tylko przesyłanie plików (plugin <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect/blob/master/src/service/plugins/share.js">src/service/plugins/share.js</a> wymagający tylko wartości <code>kdeconnect.share.request</code>). Generowanie tego pakietu w kodzie wygląda następująco:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">PROTOCOL_VERSION <span style="color:#f92672">=</span> <span style="color:#ae81ff">7</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>body.deviceId</code> i <code>body.deviceName</code> odczytaliśmy wcześniej z konfiguracji <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a>. <code>body.incomingCapabilities</code> i <code>body.outgoingCapabilities</code> zostały mocno skrócone - w pierwszej wersji chciałem mieć tylko przesyłanie plików (plugin <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect/blob/master/src/service/plugins/share.js">src/service/plugins/share.js</a> wymagający tylko wartości <code>kdeconnect.share.request</code>). Generowanie tego pakietu w kodzie wygląda następująco:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">PROTOCOL_VERSION <span style="color:#f92672">=</span> <span style="color:#ae81ff">7</span>
 INCOMING_CAPABILITIES <span style="color:#f92672">=</span> [
     <span style="color:#e6db74">&#39;kdeconnect.share.request&#39;</span>,
 ]
@@ -451,8 +707,38 @@ OUTGOING_CAPABILITIES <span style="color:#f92672">=</span> [
 
 <span style="color:#75715e"># wysyłanie w device_connection_task()</span>
         <span style="color:#66d9ef">await</span> sock<span style="color:#f92672">.</span>send(prepare_to_send(generate_my_identity()))
-</code></pre></div><p>Po wysłaniu pakietu identyfikacji - musimy przekształcić nasze gniazdo w <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> (za pomocą <a href="https://anyio.readthedocs.io/en/stable/api.html#anyio.streams.tls.TLSStream.wrap">TLSStream.wrap()</a> z <a href="https://anyio.readthedocs.io/en/stable/">AnyIO</a>, pamiętając, że protokół <a href="https://play.google.com/store/apps/details?id=org.kde.kdeconnect_tp&amp;hl=pl&amp;gl=US">KDEConnect</a> wymaga od nas zachowywania się jak strona serwera - <code>server_side=True</code>). Kontekst <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> - musi zawierać pliki certyfikatu i klucza przechwycone z <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a> i mieć załadowany certyfikat urządzenia (odczytany z konfiguracji <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a>):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> anyio.streams.tls <span style="color:#f92672">import</span> TLSStream, TLSListener
+</code></pre></td></tr></table>
+</div>
+</div><p>Po wysłaniu pakietu identyfikacji - musimy przekształcić nasze gniazdo w <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> (za pomocą <a href="https://anyio.readthedocs.io/en/stable/api.html#anyio.streams.tls.TLSStream.wrap">TLSStream.wrap()</a> z <a href="https://anyio.readthedocs.io/en/stable/">AnyIO</a>, pamiętając, że protokół <a href="https://play.google.com/store/apps/details?id=org.kde.kdeconnect_tp&amp;hl=pl&amp;gl=US">KDEConnect</a> wymaga od nas zachowywania się jak strona serwera - <code>server_side=True</code>). Kontekst <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> - musi zawierać pliki certyfikatu i klucza przechwycone z <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a> i mieć załadowany certyfikat urządzenia (odczytany z konfiguracji <a href="https://github.com/GSConnect/gnome-shell-extension-gsconnect">GSConnect</a>):</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> anyio.streams.tls <span style="color:#f92672">import</span> TLSStream, TLSListener
 
 
     <span style="color:#75715e"># ...</span>
@@ -476,8 +762,34 @@ OUTGOING_CAPABILITIES <span style="color:#f92672">=</span> [
 
         ssock <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> TLSStream<span style="color:#f92672">.</span>wrap(sock, server_side<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
                                      ssl_context<span style="color:#f92672">=</span>ssl_context)
-</code></pre></div><p>Po poprawnym przekształceniu połączenia na <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> - możemy czekać na pakiety od <a href="https://play.google.com/store/apps/details?id=org.kde.kdeconnect_tp&amp;hl=pl&amp;gl=US">KDEConnect</a>. Dla uproszczenie użyłem <a href="https://anyio.readthedocs.io/en/stable/api.html#anyio.streams.buffered.BufferedByteReceiveStream">BufferedByteReceiveStream</a>, który ułatwia czekanie na koniec pakietu - każdy pakiet to <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> przesyłany w <strong>jednej linii</strong> - czekamy więc na kolejne <code>'\n'</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> anyio.streams.buffered <span style="color:#f92672">import</span> BufferedByteReceiveStream
+</code></pre></td></tr></table>
+</div>
+</div><p>Po poprawnym przekształceniu połączenia na <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> - możemy czekać na pakiety od <a href="https://play.google.com/store/apps/details?id=org.kde.kdeconnect_tp&amp;hl=pl&amp;gl=US">KDEConnect</a>. Dla uproszczenie użyłem <a href="https://anyio.readthedocs.io/en/stable/api.html#anyio.streams.buffered.BufferedByteReceiveStream">BufferedByteReceiveStream</a>, który ułatwia czekanie na koniec pakietu - każdy pakiet to <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> przesyłany w <strong>jednej linii</strong> - czekamy więc na kolejne <code>'\n'</code>.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> anyio.streams.buffered <span style="color:#f92672">import</span> BufferedByteReceiveStream
 
         <span style="color:#75715e"># ...</span>
         bssock <span style="color:#f92672">=</span> BufferedByteReceiveStream(ssock)
@@ -497,8 +809,10 @@ OUTGOING_CAPABILITIES <span style="color:#f92672">=</span> [
             
             <span style="color:#75715e"># obsługa samego pakietu</span>
 
-</code></pre></div><p>Wspominany tu kod znajduje się w pliku <a href="https://gist.github.com/jplochocki/1a7a206ae7e2b0f2243b1fa473b31003">pyconnect.py</a>.</p>
-<p>W następnym poście przedstawię mechanizm odbierania i wysyłania plików.</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>Wspominany tu kod znajduje się w pliku <a href="https://gist.github.com/jplochocki/1a7a206ae7e2b0f2243b1fa473b31003">pyconnect.py</a>.</p>
+<p>W <a href="https://jplochocki.github.io/post/2022-02-20-pyconnect-i-pliki/">następnym poście</a> przedstawię mechanizm odbierania i wysyłania plików.</p>
 
         
           <div class="blog-tags">
@@ -532,6 +846,10 @@ OUTGOING_CAPABILITIES <span style="color:#f92672">=</span> [
               <a href="https://jplochocki.github.io/post/2022-02-02-diabel-tkwi-w-certyfikatach/" data-toggle="tooltip" data-placement="top" title="Diabeł tkwi w... certyfikatach">&larr; Previous Post</a>
             </li>
           
+          
+            <li class="next">
+              <a href="https://jplochocki.github.io/post/2022-02-20-pyconnect-i-pliki/" data-toggle="tooltip" data-placement="top" title="PyConnect i pliki">Next Post &rarr;</a>
+            </li>
           
         </ul>
       
